@@ -29,42 +29,6 @@ const executeFast = (memory, instructions ) => {
         break
       }
 
-      case 'mul': {
-        memory[args[1]] *= memory[args[2]]
-        counter++
-        break
-      }
-
-      case 'vmul': {
-        memory[args[1]] *= args[2]
-        counter++
-        break
-      }
-
-      case 'div': {
-        memory[args[1]] /= memory[args[2]]
-        counter++
-        break
-      }
-
-      case 'vdiv': {
-        memory[args[1]] /= args[2]
-        counter++
-        break
-      }
-
-      case 'mod': {
-        memory[args[1]] %= memory[args[2]]
-        counter++
-        break
-      }
-
-      case 'vmod': {
-        memory[args[1]] %= args[2]
-        counter++
-        break
-      }
-
       case 'copy': {
         memory[args[1]] = memory[args[2]]
         counter++

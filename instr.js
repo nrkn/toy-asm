@@ -14,30 +14,6 @@ const vsub = ( memory, dest, value ) => {
   memory[ dest ] -= value
 }
 
-const mul = ( memory, dest, src ) => {
-  memory[ dest ] *= memory[ src ]
-}
-
-const vmul = ( memory, dest, value ) => {
-  memory[ dest ] *= value
-}
-
-const div = ( memory, dest, src ) => {
-  memory[ dest ] /= memory[ src ]
-}
-
-const vdiv = ( memory, dest, value ) => {
-  memory[ dest ] /= value
-}
-
-const mod = ( memory, dest, src ) => {
-  memory[ dest ] %= memory[ src ]
-}
-
-const vmod = ( memory, dest, value ) => {
-  memory[ dest ] %= value
-}
-
 const copy = ( memory, dest, src ) => {
   memory[ dest ] = memory[ src ]
 }
@@ -65,7 +41,7 @@ const vjmpz = ( memory, src, value ) => {
 const brk = () => {}
 
 module.exports = {
-  add, vadd, sub, vsub, mul, vmul, div, vdiv, mod, vmod,
+  add, vadd, sub, vsub,
   copy, set,
   jmp, vjmp, jmpz, vjmpz,
   brk
