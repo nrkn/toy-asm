@@ -4,7 +4,13 @@ const { parse } = require( './parse' )
 
 const hrToMs = ( [ s, ns ] ) => s * 1e3 + ns / 1e6
 const mips = ( ms, ticks ) => ( 1e6 / ( ms / ticks ) ) / 1e6
+
 const logMemory = memory => console.log( 'memory', Array.from( memory ) )
+const logTime = ms => console.log( 'time', `${ ms.toFixed( 2 ) }ms` )
+const logMips = ( ms, ticks, title = 'MIPS' ) => console.log(
+  title,
+  Math.floor( mips( ms, ticks ) ).toLocaleString()
+)
 
 const memory = new Uint32Array( 3 )
 const times = 9e4
@@ -49,12 +55,9 @@ const endNative = hrToMs( process.hrtime( startNative ) )
 const fakeTicks = times * 5 + 3
 
 console.log( 'native' )
-console.log( 'time', `${ endNative.toFixed( 2 ) }ms` )
-console.log(
-  'fake MIPS',
-  Math.floor( mips( endNative, fakeTicks ) ).toLocaleString()
-)
-console.log( 'result', result )
+logTime( endNative )
+logMips( endNative, fakeTicks, 'fake MIPS' )
+console.log( { i, length, result } )
 
 const compareNative = ( name, fn ) => {
   memory.fill( 0 )
@@ -65,11 +68,11 @@ const compareNative = ( name, fn ) => {
 
   console.log()
   console.log( name )
-  console.log( 'time', `${ end.toFixed( 2 ) }ms` )
-  console.log( 'ratio:native', ( end / endNative ).toFixed( 2 ) )
-  console.log( 'ticks', ticks.toLocaleString() )
-  console.log( 'MIPS', Math.floor( mips( end, ticks ) ).toLocaleString() )
+  logTime( end )
+  logMips( end, ticks )
   logMemory( memory )
+  console.log( 'ticks', ticks.toLocaleString() )
+  console.log( 'ratio:native', ( end / endNative ).toFixed( 2 ) )
 }
 
 const instructions = program.map( parse )
