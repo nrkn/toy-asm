@@ -26,7 +26,7 @@ Super, super unscientific. Not run long enough, only uses a few instructions etc
 
 ```js
 let i = 0
-let length = times
+let length = 9e5
 let result = 0
 
 do {
