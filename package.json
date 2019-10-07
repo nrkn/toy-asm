@@ -1,0 +1,20 @@
+{
+  "name": "toy-asm",
+  "version": "0.0.1",
+  "description": "Toy assembly language",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nrkn/toy-asm.git"
+  },
+  "keywords": [],
+  "author": "Nik Coughlin <nrkn.com@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nrkn/toy-asm/issues"
+  },
+  "homepage": "https://github.com/nrkn/toy-asm#readme"
+}
