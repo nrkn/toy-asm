@@ -38,7 +38,7 @@ do {
 
 ### results
 
-On i7-3770:
+On [i7-3770](https://en.wikipedia.org/wiki/Instructions_per_second#Timeline_of_instructions_per_second):
 
 ```
 native
