@@ -1,17 +1,22 @@
 const compile = instructions => `
 (memory => {
   let counter = 0
+  let ticks = 0
 
   while( counter >= 0 ){
     switch( counter ){
       ${
         instructions.map(
           ( instr, i ) =>
-            `    case ${ i }: {${ compileInstr( instr ) }}`
+            `    case ${ i }: {
+                   ticks++${ compileInstr( instr ) }}
+            `
         ).join( '\n' )
       }
     }
   }
+
+  return ticks
 })
 `
 

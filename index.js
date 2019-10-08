@@ -2,6 +2,7 @@ const { execute } = require( './execute' )
 const { executeFast } = require( './execute-fast' )
 const { parse } = require( './parse' )
 const { compile } = require( './compile' )
+const compiledNoEval = require( './compiled-out' )
 
 const hrToMs = ( [ s, ns ] ) => s * 1e3 + ns / 1e6
 const mips = ( ms, ticks ) => ( 1e6 / ( ms / ticks ) ) / 1e6
@@ -99,13 +100,31 @@ const instructions = program.map( parse )
 
 const compiled = compile( instructions )
 
+const compareCompiledEvalNative = () => {
+  let ticks = 0
+  const start = process.hrtime()
+
+  for ( let i = 0; i < benchTimes; i++ ) {
+    ticks += eval.call( null, compiled )( memory )
+  }
+
+  const ms = hrToMs( process.hrtime( start ) )
+
+  console.log()
+  console.log( 'compiled - eval' )
+  console.log( 'result', memory[ 2 ].toLocaleString() )
+  logTime( ms )
+  console.log( 'ticks', ticks.toLocaleString() )
+  logMips( ms, ticks )
+  console.log( 'native', `${ ( 100 / ( ms / msNative ) ).toFixed( 2 ) }%` )
+}
+
 const compareCompiledNative = () => {
   let ticks = 0
   const start = process.hrtime()
 
   for ( let i = 0; i < benchTimes; i++ ) {
-    result = eval.call( null, compiled )( memory )
-    ticks += nativeTicks
+    ticks += compiledNoEval( memory )
   }
 
   const ms = hrToMs( process.hrtime( start ) )
@@ -120,6 +139,7 @@ const compareCompiledNative = () => {
 }
 
 compareCompiledNative()
+compareCompiledEvalNative()
 
 compareNative( 'imperative', executeFast )
 compareNative( 'fn', execute )
