@@ -104,7 +104,7 @@ const compareCompiledNative = () => {
   const start = process.hrtime()
 
   for ( let i = 0; i < benchTimes; i++ ) {
-    result = eval.call( {}, compiled )( memory )
+    result = eval.call( null, compiled )( memory )
     ticks += nativeTicks
   }
 
