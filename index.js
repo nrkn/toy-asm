@@ -141,5 +141,5 @@ const compareCompiledNative = () => {
 compareCompiledNative()
 compareCompiledEvalNative()
 
-compareNative( 'imperative', executeFast )
-compareNative( 'fn', execute )
+compareNative( 'interpreted - imperative', executeFast )
+compareNative( 'interpreted - fn', execute )
