@@ -1,5 +1,5 @@
 const parse = instruction => {
-  let [ op, arg1, arg2 ] = instruction.split( ' ' )
+  let [ op, arg1, arg2 ] = instruction.split( /\s+/ ).filter( s => s !== '' )
 
   if( arg1 === undefined ) return [ op ]
 
