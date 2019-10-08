@@ -5,12 +5,11 @@ const { compile } = require( './compile' )
 const compiledNoEval = require( './compiled-out' )
 
 const hrToMs = ( [ s, ns ] ) => s * 1e3 + ns / 1e6
-const mips = ( ms, ticks ) => ( 1e6 / ( ms / ticks ) ) / 1e6
 
 const logTime = ms => console.log( 'time', `${ ms.toFixed( 2 ) }ms` )
-const logMips = ( ms, ticks, title = 'MIPS' ) => console.log(
-  title,
-  Math.floor( mips( ms, ticks ) ).toLocaleString()
+const logMips = ( ms, ticks ) => console.log(
+  'MIPS',
+  Math.floor( ticks / ms ).toLocaleString()
 )
 
 const memory = new Uint32Array( 3 )
