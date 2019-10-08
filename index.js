@@ -1,6 +1,7 @@
 const { execute } = require( './execute' )
 const { executeFast } = require( './execute-fast' )
 const { parse } = require( './parse' )
+const { compile } = require( './compile' )
 
 const hrToMs = ( [ s, ns ] ) => s * 1e3 + ns / 1e6
 const mips = ( ms, ticks ) => ( 1e6 / ( ms / ticks ) ) / 1e6
@@ -97,3 +98,28 @@ const instructions = program.map( parse )
 
 compareNative( 'imperative', executeFast )
 compareNative( 'fn', execute )
+
+const compiled = new Function( compile( instructions, 'new Uint32Array( 3 )' ) )
+
+const compareCompiledNative = () => {
+  let ticks = 0
+  let result
+  const start = process.hrtime()
+
+  for ( let i = 0; i < benchTimes; i++ ) {
+    result = compiled()[ 2 ]
+    ticks += nativeTicks
+  }
+
+  const ms = hrToMs( process.hrtime( start ) )
+
+  console.log()
+  console.log( 'compiled' )
+  console.log( 'result', result.toLocaleString() )
+  logTime( ms )
+  console.log( 'ticks', ticks.toLocaleString() )
+  logMips( ms, ticks )
+  console.log( 'native', `${ ( 100 / ( ms / msNative ) ).toFixed( 2 ) }%` )
+}
+
+compareCompiledNative()
