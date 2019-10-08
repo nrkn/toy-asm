@@ -99,15 +99,14 @@ const instructions = program.map( parse )
 compareNative( 'imperative', executeFast )
 compareNative( 'fn', execute )
 
-const compiled = new Function( compile( instructions, 'new Uint32Array( 3 )' ) )
+const compiled = compile( instructions )
 
 const compareCompiledNative = () => {
   let ticks = 0
-  let result
   const start = process.hrtime()
 
   for ( let i = 0; i < benchTimes; i++ ) {
-    result = compiled()[ 2 ]
+    result = eval.call( {}, compiled )( memory )
     ticks += nativeTicks
   }
 
@@ -115,7 +114,7 @@ const compareCompiledNative = () => {
 
   console.log()
   console.log( 'compiled' )
-  console.log( 'result', result.toLocaleString() )
+  console.log( 'result', memory[ 2 ].toLocaleString() )
   logTime( ms )
   console.log( 'ticks', ticks.toLocaleString() )
   logMips( ms, ticks )

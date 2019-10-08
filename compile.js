@@ -1,19 +1,18 @@
-const compile = ( instructions, memoryExpr ) => `
-let counter = 0
-const memory = ${ memoryExpr }
+const compile = instructions => `
+(function( memory ){
+  let counter = 0
 
-while( counter >= 0 ){
-  switch( counter ){
-    ${
-      instructions.map(
-        ( instr, i ) =>
-          `    case ${ i }: {${ compileInstr( instr ) }}`
-      ).join( '\n' )
+  while( counter >= 0 ){
+    switch( counter ){
+      ${
+        instructions.map(
+          ( instr, i ) =>
+            `    case ${ i }: {${ compileInstr( instr ) }}`
+        ).join( '\n' )
+      }
     }
   }
-}
-
-return memory
+})
 `
 
 const compileInstr = ( [ op, arg1, arg2 ] ) => {
