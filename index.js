@@ -5,7 +5,6 @@ const { parse } = require( './parse' )
 const hrToMs = ( [ s, ns ] ) => s * 1e3 + ns / 1e6
 const mips = ( ms, ticks ) => ( 1e6 / ( ms / ticks ) ) / 1e6
 
-const logMemory = memory => console.log( 'memory', Array.from( memory ) )
 const logTime = ms => console.log( 'time', `${ ms.toFixed( 2 ) }ms` )
 const logMips = ( ms, ticks, title = 'MIPS' ) => console.log(
   title,
@@ -13,13 +12,14 @@ const logMips = ( ms, ticks, title = 'MIPS' ) => console.log(
 )
 
 const memory = new Uint32Array( 3 )
-const times = 9e4
+const loopLength = 9e4
+const benchTimes = 100
 
 const program = [
   // 0 - i
   'set 0 0',
   // 1 - length
-  `set 1 ${ times }`,
+  `set 1 ${ loopLength }`,
   // 2 - result
   'set 2 0',
 
@@ -38,45 +38,62 @@ const program = [
   'brk'
 ]
 
-const startNative = process.hrtime()
+// fake - estimated based on asm ticks
+const nativeTicks = loopLength * 5 + 3
 
-let i = 0
-let length = times
-let result = 0
+let ticks = 0
+let result
 
-do {
-  result += i
-  i++
-  length--
-} while ( length )
+const native = () => {
+  let i = 0
+  let length = loopLength
+  let result = 0
 
-const endNative = hrToMs( process.hrtime( startNative ) )
+  do {
+    result += i
+    i++
+    length--
+  } while ( length )
 
-const fakeTicks = times * 5 + 3
+  return result
+}
+
+const start = process.hrtime()
+
+for ( let i = 0; i < benchTimes; i++ ) {
+  result = native()
+
+  ticks += nativeTicks
+}
+
+const msNative = hrToMs( process.hrtime( start ) )
 
 console.log( 'native' )
-logTime( endNative )
-logMips( endNative, fakeTicks, 'fake MIPS' )
-console.log( { i, length, result } )
+console.log( 'result', result.toLocaleString() )
+logTime( msNative )
+console.log( 'ticks', ticks.toLocaleString() )
+logMips( msNative, ticks )
 
-const compareNative = ( name, fn ) => {
-  memory.fill( 0 )
-
+const compareNative = ( name, ex ) => {
+  let ticks = 0
   const start = process.hrtime()
-  const ticks = fn()
-  const end = hrToMs( process.hrtime( start ) )
+
+  for ( let i = 0; i < benchTimes; i++ ) {
+    ticks += ex( memory, instructions )
+  }
+
+  const ms = hrToMs( process.hrtime( start ) )
 
   console.log()
   console.log( name )
-  logTime( end )
-  logMips( end, ticks )
-  logMemory( memory )
+  console.log( 'result', memory[ 2 ].toLocaleString() )
+  logTime( ms )
   console.log( 'ticks', ticks.toLocaleString() )
-  console.log( 'ratio:native', ( end / endNative ).toFixed( 2 ) )
+  logMips( ms, ticks )
+  console.log( 'native', `${ ( 100 / ( ms / msNative ) ).toFixed( 2 ) }%` )
 }
 
 const instructions = program.map( parse )
 
-compareNative( 'fn', () => execute( memory, instructions ) )
-
-compareNative( 'imperative', () => executeFast( memory, instructions ) )
+compareNative( 'imperative', executeFast )
+compareNative( 'fn', execute )
