@@ -54,7 +54,7 @@ const compileInstr = ( [ op, arg1, arg2 ] ) => {
       `
     }
 
-    case 'copy': {
+    case 'cpy': {
       return `
           memory[${ arg1 }] = memory[${ arg2 }]
           counter++
@@ -62,7 +62,7 @@ const compileInstr = ( [ op, arg1, arg2 ] ) => {
       `
     }
 
-    case 'set': {
+    case 'vcpy': {
       return `
           memory[${ arg1 }] = ${ arg2 }
           counter++

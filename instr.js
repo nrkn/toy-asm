@@ -14,11 +14,11 @@ const vsub = ( memory, dest, value ) => {
   memory[ dest ] -= value
 }
 
-const copy = ( memory, dest, src ) => {
+const cpy = ( memory, dest, src ) => {
   memory[ dest ] = memory[ src ]
 }
 
-const set = ( memory, dest, value ) => {
+const vcpy = ( memory, dest, value ) => {
   memory[ dest ] = value
 }
 
@@ -42,7 +42,7 @@ const brk = () => {}
 
 module.exports = {
   add, vadd, sub, vsub,
-  copy, set,
+  cpy, vcpy,
   jmp, vjmp, jmpz, vjmpz,
   brk
 }

@@ -19,23 +19,23 @@ const benchTimes = 100
 
 const program = [
   // 0 - i
-  'set 0 0',
+  'cpy $0 0',
   // 1 - length
-  `set 1 ${ loopLength }`,
+  `cpy $1 ${ loopLength }`,
   // 2 - result
-  'set 2 0',
+  'cpy $2 0',
 
   // :loop
   // 3 - result += i
-  'add 2 0',
+  'add $2 $0',
   // 4 - i++
-  'vadd 0 1',
+  'add $0 1',
   // 5 - length--
-  'vsub 1 1',
+  'sub $1 1',
   // 6 - if length === 0
-  'vjmpz 1 8',
+  'jmpz $1 8',
   // 7 - else
-  'vjmp 3',
+  'jmp 3',
   // 8 - break
   'brk'
 ]

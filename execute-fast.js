@@ -29,13 +29,13 @@ const executeFast = (memory, instructions ) => {
         break
       }
 
-      case 'copy': {
+      case 'cpy': {
         memory[args[1]] = memory[args[2]]
         counter++
         break
       }
 
-      case 'set': {
+      case 'vcpy': {
         memory[args[1]] = args[2]
         counter++
         break

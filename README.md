@@ -3,14 +3,14 @@
 Toy assembly language
 
 ```
-set 0 0
-set 1 90000
-set 2 0
-add 2 0
-vadd 0 1
-vsub 1 1
-vjmpz 1 8
-vjmp 3
+cpy $0 0
+cpy $1 90000
+cpy $2 0
+add $2 $0
+add $0 1
+sub $1 1
+jmpz $1 8
+jmp 3
 brk
 ```
 
