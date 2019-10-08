@@ -7,10 +7,11 @@ const parse = instruction => {
     arg1 = Number( arg1.substring( 1 ) )
   } else {
     arg1 = Number( arg1 )
+    op = 'v' + op
+  }
 
-    if( arg2 === undefined ){
-      return [ 'v' + op, arg1 ]
-    }
+  if( arg2 === undefined ){
+    return [ op, arg1 ]
   }
 
   if( arg2.startsWith( '$' ) ){
