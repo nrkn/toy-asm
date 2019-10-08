@@ -43,23 +43,30 @@ On i7-3770
 ```
 native
 result 4,049,955,000
-time 18.63ms
+time 18.34ms
 ticks 45,000,300
-MIPS 2,415,371
+MIPS 2,454,178
 
 imperative
 result 4,049,955,000
-time 775.97ms
+time 769.41ms
 ticks 45,000,300
-MIPS 57,992
-native 2.40%
+MIPS 58,486
+native 2.38%
 
 fn
 result 4,049,955,000
-time 1632.15ms
+time 1632.35ms
 ticks 45,000,300
-MIPS 27,571
-native 1.14%
+MIPS 27,567
+native 1.12%
+
+compiled
+result 4,049,955,000
+time 100.11ms
+ticks 45,000,300
+MIPS 449,512
+native 18.32%
 ```
 
 nb not comparable to actual [MIPs](https://en.wikipedia.org/wiki/Instructions_per_second)
