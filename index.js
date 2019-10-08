@@ -97,7 +97,6 @@ const compareNative = ( name, ex ) => {
 
 const instructions = program.map( parse )
 
-
 const compiled = compile( instructions )
 
 const compareCompiledEvalNative = () => {
