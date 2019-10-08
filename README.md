@@ -38,7 +38,7 @@ do {
 
 ### results
 
-On [i7-3770](https://en.wikipedia.org/wiki/Instructions_per_second#Timeline_of_instructions_per_second):
+On i7-3770
 
 ```
 native
@@ -61,3 +61,5 @@ ticks 45,000,300
 MIPS 27,571
 native 1.14%
 ```
+
+nb not comparable to actual [MIPs](https://en.wikipedia.org/wiki/Instructions_per_second)
