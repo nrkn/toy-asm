@@ -1,5 +1,5 @@
 const compile = instructions => `
-(function( memory ){
+(memory => {
   let counter = 0
 
   while( counter >= 0 ){

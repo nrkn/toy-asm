@@ -96,8 +96,6 @@ const compareNative = ( name, ex ) => {
 
 const instructions = program.map( parse )
 
-compareNative( 'imperative', executeFast )
-compareNative( 'fn', execute )
 
 const compiled = compile( instructions )
 
@@ -122,3 +120,6 @@ const compareCompiledNative = () => {
 }
 
 compareCompiledNative()
+
+compareNative( 'imperative', executeFast )
+compareNative( 'fn', execute )
