@@ -2,6 +2,7 @@ const { execute } = require( './execute' )
 const { executeFast } = require( './execute-fast' )
 const { parse } = require( './parse' )
 const { compile } = require( './compile' )
+const { CompiledAsm } = require( './compiled-asm-out' )
 const compiledNoEval = require( './compiled-out' )
 
 const hrToMs = ( [ s, ns ] ) => s * 1e3 + ns / 1e6
@@ -117,6 +118,29 @@ const compareCompiledEvalNative = () => {
   console.log( 'native', `${ ( 100 / ( ms / msNative ) ).toFixed( 2 ) }%` )
 }
 
+const heap = new ArrayBuffer( 0x10000 )
+const stdlib = { Uint32Array }
+const lib = new CompiledAsm( stdlib, null, heap )
+
+const compareCompiledAsmNative = () => {
+  let ticks = 0
+  const start = process.hrtime()
+
+  for ( let i = 0; i < benchTimes; i++ ) {
+    ticks += lib.run()
+  }
+
+  const ms = hrToMs( process.hrtime( start ) )
+
+  console.log()
+  console.log( 'compiled - asm.js' )
+  console.log( 'result', memory[ 2 ].toLocaleString() )
+  logTime( ms )
+  console.log( 'ticks', ticks.toLocaleString() )
+  logMips( ms, ticks )
+  console.log( 'native', `${ ( 100 / ( ms / msNative ) ).toFixed( 2 ) }%` )
+}
+
 const compareCompiledNative = () => {
   let ticks = 0
   const start = process.hrtime()
@@ -138,6 +162,7 @@ const compareCompiledNative = () => {
 
 compareCompiledNative()
 compareCompiledEvalNative()
+compareCompiledAsmNative()
 
 compareNative( 'interpreted - imperative', executeFast )
 compareNative( 'interpreted - fn', execute )

@@ -43,37 +43,44 @@ On i7-3770
 ```
 native
 result 4,049,955,000
-time 18.05ms
+time 18.50ms
 ticks 45,000,300
-MIPS 2,493,036
+MIPS 2,431,857
 
 compiled
 result 4,049,955,000
-time 117.83ms
+time 134.49ms
 ticks 45,000,300
-MIPS 381,903
-native 15.32%
+MIPS 334,601
+native 13.76%
 
 compiled - eval
 result 4,049,955,000
-time 140.02ms
+time 132.87ms
 ticks 45,000,300
-MIPS 321,386
-native 12.89%
+MIPS 338,668
+native 13.93%
+
+compiled - asm.js
+result 4,049,955,000
+time 8.47ms
+ticks 45,000,300
+MIPS 5,311,023
+native 218.39%
 
 interpreted - imperative
 result 4,049,955,000
-time 779.52ms
+time 1049.48ms
 ticks 45,000,300
-MIPS 57,728
-native 2.32%
+MIPS 42,878
+native 1.76%
 
 interpreted - fn
 result 4,049,955,000
-time 1627.38ms
+time 1715.64ms
 ticks 45,000,300
-MIPS 27,651
-native 1.11%
+MIPS 26,229
+native 1.08%
 ```
 
 nb not comparable to actual

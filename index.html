@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title></title>
+</head>
+
+<body>
+  <script>
+    function compiledAsm( stdlib, foreign, heap ) {
+      'use asm'
+
+      var counter = 0
+      var ticks = 0
+      var memory = new stdlib.Uint32Array( heap )
+
+      function run() {
+        while ( ( counter | 0 ) >= ( 0 | 0 ) ) {
+          switch ( counter ) {
+            case 0: {
+              ticks = ( ticks + 1 ) | 0
+              memory[ 0 ] = 0 | 0
+              counter = ( counter + 1 ) | 0
+              break
+            }
+
+            case 1: {
+              ticks = ( ticks + 1 ) | 0
+              memory[ 1 ] = 90000 | 0
+              counter = ( counter + 1 ) | 0
+              break
+            }
+
+            case 2: {
+              ticks = ( ticks + 1 ) | 0
+              memory[ 2 ] = 0 | 0
+              counter = ( counter + 1 ) | 0
+              break
+            }
+
+            case 3: {
+              ticks = ( ticks + 1 ) | 0
+              memory[ 2 ] = ( memory[ 2 ] + memory[ 0 ] ) | 0
+              counter = ( counter + 1 ) | 0
+              break
+            }
+
+            case 4: {
+              ticks = ( ticks + 1 ) | 0
+              memory[ 0 ] = ( memory[ 0 ] + 1 ) | 0
+              counter = ( counter + 1 ) | 0
+              break
+            }
+
+            case 5: {
+              ticks = ( ticks + 1 ) | 0
+              memory[ 1 ] = ( memory[ 1 ] - 1 ) | 0
+              counter = ( counter + 1 ) | 0
+              break
+            }
+
+            case 6: {
+              ticks = ( ticks + 1 ) | 0
+              if ( memory[ 1 ] == 0 ) {
+                counter = 8 | 0
+              } else {
+                counter = ( counter + 1 ) | 0
+              }
+              break
+            }
+
+            case 7: {
+              ticks = ( ticks + 1 ) | 0
+              counter = 3 | 0
+              break
+            }
+
+            case 8: {
+              ticks = ( ticks + 1 ) | 0
+              counter = -1 | 0
+              break
+            }
+
+          }
+        }
+
+        return ticks
+      }
+
+      return { run: run }
+    }
+
+    const heap = new ArrayBuffer( 0x10000 )
+    const stdlib = { Uint32Array }
+    const lib = new compiledAsm( stdlib, null, heap )
+
+    const ticks = lib.run()
+
+    document.body.appendChild(
+      document.createTextNode(
+        JSON.stringify(
+          [
+            ticks,
+            Array.from( new Uint32Array( heap ).slice( 0, 3 ) )
+          ]
+        )
+      )
+    )
+  </script>
+</body>
+
+</html>
