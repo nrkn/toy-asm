@@ -76,4 +76,5 @@ MIPS 27,651
 native 1.11%
 ```
 
-nb not comparable to actual [MIPs](https://en.wikipedia.org/wiki/Instructions_per_second)
+nb not comparable to actual
+[MIPs](https://en.wikipedia.org/wiki/Instructions_per_second)
